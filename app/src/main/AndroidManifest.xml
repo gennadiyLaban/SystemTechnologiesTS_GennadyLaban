@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.laban.systemtechnologies.screens.settings.SettingsActivity"></activity>
+        <activity android:name="com.laban.systemtechnologies.screens.settings.SettingsActivity" />
+        <activity android:name="com.laban.systemtechnologies.screens.currency.CurrencyListActivity"></activity>
     </application>
 
 </manifest>
