@@ -4,8 +4,8 @@ import com.laban.systemtechnologies.screens.BaseViewModel;
 
 public class MainViewModel extends BaseViewModel<MainDataRepository, MainView> {
 
-    public MainViewModel(MainDataRepository dataRepository, MainView view) {
-        super(dataRepository, view);
+    public MainViewModel(MainDataRepository dataRepository) {
+        super(dataRepository);
     }
 
 }

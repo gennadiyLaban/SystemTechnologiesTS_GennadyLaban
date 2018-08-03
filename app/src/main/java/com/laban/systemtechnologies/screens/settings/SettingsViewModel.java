@@ -8,8 +8,8 @@ import com.laban.systemtechnologies.screens.BaseViewModel;
  * Author: H.Laban
  */
 public class SettingsViewModel extends BaseViewModel<SettingsDataRepository, SettingsView> {
-    public SettingsViewModel(SettingsDataRepository dataRepository, SettingsView view) {
-        super(dataRepository, view);
+    public SettingsViewModel(SettingsDataRepository dataRepository) {
+        super(dataRepository);
     }
 
 
