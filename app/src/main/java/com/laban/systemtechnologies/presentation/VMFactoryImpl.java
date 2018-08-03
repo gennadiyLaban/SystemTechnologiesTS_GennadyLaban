@@ -1,12 +1,11 @@
 package com.laban.systemtechnologies.presentation;
 
+import android.util.Log;
+
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.Screen;
-import com.laban.systemtechnologies.screens.currency.CurrencyDataRepository;
 import com.laban.systemtechnologies.screens.currency.CurrencyViewModel;
-import com.laban.systemtechnologies.screens.main.MainDataRepository;
 import com.laban.systemtechnologies.screens.main.MainViewModel;
-import com.laban.systemtechnologies.screens.settings.SettingsDataRepository;
 import com.laban.systemtechnologies.screens.settings.SettingsViewModel;
 
 import java.util.HashMap;
@@ -24,25 +23,29 @@ public class VMFactoryImpl implements ViewModelFactory {
     @Override
     public <T extends BaseViewModel> T onCreateScreen(Screen screen) {
         VMHolder holder = getVMHolder(screen);
+        Log.d(getClass().getSimpleName(), "on_create " + screen.name());
         holder.incrementRef();
         return (T) holder.getViewModel();
     }
 
     @Override
-    public void onDestroyScreen(Screen screen) {
+    public void onDestroyScreen(Screen screen, boolean rotation) {
         VMHolder holder = getVMHolder(screen);
-        if (holder.decrementRef() == 0) {
+        Log.d(getClass().getSimpleName(), "destroy " + screen.name());
+        if (holder.decrementRef() == 0 && !rotation) {
             removeVMHolder(screen);
         }
     }
 
     private void removeVMHolder(Screen screen) {
+        Log.d(getClass().getSimpleName(), "remove " + screen.name());
         modelMap.remove(screen);
     }
 
     private VMHolder getVMHolder(Screen screen) {
         VMHolder holder = modelMap.get(screen);
         if (holder == null) {
+            Log.d(getClass().getSimpleName(), "create " + screen.name());
             holder = new VMHolder(createViewModel(screen));
             modelMap.put(screen, holder);
         }
@@ -53,13 +56,13 @@ public class VMFactoryImpl implements ViewModelFactory {
         BaseViewModel viewModel = null;
         switch (screen) {
             case MAIN:
-                viewModel = new MainViewModel((MainDataRepository) repositoryFactory.createRepository(screen));
+                viewModel = new MainViewModel(repositoryFactory.createRepository(screen));
                 break;
             case CURRENCY_LIST:
-                viewModel = new CurrencyViewModel((CurrencyDataRepository) repositoryFactory.createRepository(screen));
+                viewModel = new CurrencyViewModel(repositoryFactory.createRepository(screen));
                 break;
             case SETTINGS:
-                viewModel = new SettingsViewModel((SettingsDataRepository) repositoryFactory.createRepository(screen));
+                viewModel = new SettingsViewModel(repositoryFactory.createRepository(screen));
                 break;
         }
         return viewModel;

@@ -23,8 +23,8 @@ public class CurrencyApplication extends Application implements ViewModelFactory
     }
 
     @Override
-    public void onDestroyScreen(Screen screen) {
-        viewModelFactory.onDestroyScreen(screen);
+    public void onDestroyScreen(Screen screen, boolean rotation) {
+        viewModelFactory.onDestroyScreen(screen, rotation);
     }
 
 }

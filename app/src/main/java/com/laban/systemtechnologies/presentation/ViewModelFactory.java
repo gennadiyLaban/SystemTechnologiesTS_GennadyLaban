@@ -7,6 +7,6 @@ public interface ViewModelFactory {
 
     <T extends BaseViewModel> T onCreateScreen(Screen screen);
 
-    void onDestroyScreen(Screen screen);
+    void onDestroyScreen(Screen screen, boolean rotation);
 
 }

@@ -9,10 +9,12 @@ import com.laban.systemtechnologies.presentation.ViewModelFactory;
 
 public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> extends AppCompatActivity {
     private T viewModel;
+    private boolean rotation = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        rotation = false;
         viewModel = ((ViewModelFactory) getApplication()).onCreateScreen(getScreen());
     }
 
@@ -29,9 +31,15 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        rotation = true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((ViewModelFactory) getApplication()).onDestroyScreen(getScreen());
+        ((ViewModelFactory) getApplication()).onDestroyScreen(getScreen(), rotation);
     }
 
     protected T getViewModel() {
