@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
-public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> extends AppCompatActivity {
     private T viewModel;
 
     @Override

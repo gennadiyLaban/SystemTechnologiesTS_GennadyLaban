@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
 import com.laban.systemtechnologies.screens.BaseActivity;
 
-public class MainActivity extends BaseActivity<MainViewModel> {
+public class MainActivity extends BaseActivity<MainViewModel, MainView> implements MainView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
