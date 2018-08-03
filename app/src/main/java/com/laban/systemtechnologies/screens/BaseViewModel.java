@@ -3,6 +3,7 @@ package com.laban.systemtechnologies.screens;
 public abstract class BaseViewModel<R extends DataRepository, V extends BaseView> {
     private R dataRepository;
     private V view;
+    private boolean attach;
 
     public BaseViewModel(R dataRepository) {
         this.dataRepository = dataRepository;
@@ -17,8 +18,18 @@ public abstract class BaseViewModel<R extends DataRepository, V extends BaseView
         return view;
     }
 
+    protected boolean isAttach() {
+        return attach;
+    }
+
     public void attachView(V view) {
         this.view = view;
+        attach = true;
+    }
+
+    public void detachView() {
+        this.attach = false;
+        this.view = null;
     }
 
 }
