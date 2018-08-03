@@ -21,13 +21,13 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     @Override
     protected void onStart() {
         super.onStart();
-        viewModel.attachView((V) this);
+        attachPresenter();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        viewModel.detachView();
+        detachPresenter();
     }
 
     @Override
@@ -47,5 +47,13 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     }
 
     protected abstract Screen getScreen();
+
+    protected void attachPresenter() {
+        viewModel.attachView((V) this);
+    }
+
+    protected void detachPresenter() {
+        viewModel.detachView();
+    }
 
 }
