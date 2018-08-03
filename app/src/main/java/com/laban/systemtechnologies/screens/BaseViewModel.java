@@ -1,19 +1,19 @@
 package com.laban.systemtechnologies.screens;
 
-public abstract class BaseViewModel {
-    private DataRepository dataRepository;
-    private BaseView view;
+public abstract class BaseViewModel<R extends DataRepository, V extends BaseView> {
+    private R dataRepository;
+    private V view;
 
-    public BaseViewModel(DataRepository dataRepository, BaseView view) {
+    public BaseViewModel(R dataRepository, V view) {
         this.dataRepository = dataRepository;
         this.view = view;
     }
 
-    protected DataRepository getDataRepository(){
+    protected R getDataRepository() {
         return dataRepository;
     }
 
-    protected BaseView getView() {
+    protected V getView() {
         return view;
     }
 

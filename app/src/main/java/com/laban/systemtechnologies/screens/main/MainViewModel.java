@@ -1,6 +1,5 @@
 package com.laban.systemtechnologies.screens.main;
 
-import com.laban.systemtechnologies.screens.BaseView;
 import com.laban.systemtechnologies.screens.BaseViewModel;
 
 /**
@@ -8,19 +7,10 @@ import com.laban.systemtechnologies.screens.BaseViewModel;
  * All rights reserved
  * Author: H.Laban
  */
-public class MainViewModel extends BaseViewModel {
+public class MainViewModel extends BaseViewModel<MainDataRepository, MainView> {
 
-    public MainViewModel(MainDataRepository dataRepository, BaseView view) {
+    public MainViewModel(MainDataRepository dataRepository, MainView view) {
         super(dataRepository, view);
     }
 
-    @Override
-    protected MainDataRepository getDataRepository() {
-        return (MainDataRepository) super.getDataRepository();
-    }
-
-    @Override
-    protected MainView getView() {
-        return (MainView) super.getView();
-    }
 }
