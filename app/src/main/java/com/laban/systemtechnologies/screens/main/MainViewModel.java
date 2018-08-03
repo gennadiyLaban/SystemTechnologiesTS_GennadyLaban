@@ -8,4 +8,12 @@ public class MainViewModel extends BaseViewModel<MainDataRepository, MainView> {
         super(dataRepository);
     }
 
+    public void onPressCurrencyBtn() {
+        getView().openCurrencyScreen();
+    }
+
+    public void onPressSettingsBtn() {
+        getView().openSettingsScreen();
+    }
+
 }

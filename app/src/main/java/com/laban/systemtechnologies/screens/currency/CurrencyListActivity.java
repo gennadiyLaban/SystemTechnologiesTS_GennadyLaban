@@ -6,7 +6,7 @@ import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
 import com.laban.systemtechnologies.screens.BaseActivity;
 import com.laban.systemtechnologies.screens.Screen;
 
-public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, CurrencyView> {
+public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, CurrencyView> implements CurrencyView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
