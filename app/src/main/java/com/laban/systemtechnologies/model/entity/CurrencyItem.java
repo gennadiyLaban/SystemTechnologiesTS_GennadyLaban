@@ -3,20 +3,21 @@ package com.laban.systemtechnologies.model.entity;
 import java.math.BigDecimal;
 
 public class CurrencyItem {
-    private String charCode;
-    private int scale;
     private String name;
+    private String rateCharCode;
     private BigDecimal rate;
+    private int scale;
+    private String scaleCharCode;
 
     public CurrencyItem() {
     }
 
-    public String getCharCode() {
-        return charCode;
+    public String getRateCharCode() {
+        return rateCharCode;
     }
 
-    public void setCharCode(String charCode) {
-        this.charCode = charCode;
+    public void setRateCharCode(String rateCharCode) {
+        this.rateCharCode = rateCharCode;
     }
 
     public int getScale() {
@@ -41,5 +42,13 @@ public class CurrencyItem {
 
     public void setRate(BigDecimal rate) {
         this.rate = rate;
+    }
+
+    public String getScaleCharCode() {
+        return scaleCharCode;
+    }
+
+    public void setScaleCharCode(String scaleCharCode) {
+        this.scaleCharCode = scaleCharCode;
     }
 }

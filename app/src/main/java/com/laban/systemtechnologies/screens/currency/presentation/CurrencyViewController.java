@@ -9,5 +9,12 @@ public class CurrencyViewController {
         this.item = item;
     }
 
+    public void bind(CurrencyListAdapter.CurrencyHolder currencyHolder) {
+        currencyHolder.name.setText(item.getName());
+        currencyHolder.rateCharCode.setText(item.getRateCharCode());
+        currencyHolder.rate.setText(item.getRate().toString());
+        currencyHolder.scaleCharCode.setText(item.getScaleCharCode());
+        currencyHolder.scale.setText(String.valueOf(item.getScale()));
+    }
 
 }

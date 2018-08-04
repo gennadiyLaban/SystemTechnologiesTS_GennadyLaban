@@ -22,7 +22,6 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapte
         public TextView name;
         public TextView scale;
         public TextView scaleCharCode;
-        public TextView equalSign;
         public TextView rate;
         public TextView rateCharCode;
 
@@ -31,7 +30,6 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapte
             name = itemView.findViewById(R.id.name);
             scale = itemView.findViewById(R.id.scale);
             scaleCharCode = itemView.findViewById(R.id.scale_char_code);
-            equalSign = itemView.findViewById(R.id.equal_sign);
             rate = itemView.findViewById(R.id.rate);
             rateCharCode = itemView.findViewById(R.id.rate_char_code);
         }
@@ -46,11 +44,11 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CurrencyHolder holder, int position) {
-
+        controllers.get(position).bind(holder);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return controllers.size();
     }
 }
