@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
@@ -30,8 +31,19 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                 dataRepository = new CurrencyDataRepository() {
                     private BehaviorSubject<List<CurrencyItem>> currencyFlow = BehaviorSubject.create();
 
+
                     @Override
                     public Flowable<List<CurrencyItem>> getCurrencyItemFlow() {
+                        currencyFlow.onNext(initList());
+                        return currencyFlow.toFlowable(BackpressureStrategy.BUFFER);
+                    }
+
+                    @Override
+                    public Single<List<CurrencyItem>> updateData() {
+                        return Single.just(initList());
+                    }
+
+                    private List<CurrencyItem> initList() {
                         List<CurrencyItem> items = new ArrayList<>();
                         CurrencyItem item = new CurrencyItem();
                         item.setName("Российский рубль");
@@ -48,9 +60,9 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                         item.setScale(1);
                         item.setScaleCharCode("BYN");
                         items.add(item);
-                        currencyFlow.onNext(items);
-                        return currencyFlow.toFlowable(BackpressureStrategy.BUFFER);
+                        return items;
                     }
+
                 };
                 break;
             case SETTINGS:

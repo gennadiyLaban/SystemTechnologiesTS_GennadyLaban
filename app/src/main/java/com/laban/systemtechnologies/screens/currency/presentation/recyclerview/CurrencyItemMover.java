@@ -1,13 +1,19 @@
 package com.laban.systemtechnologies.screens.currency.presentation.recyclerview;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-public class CurrencyItemMover extends ItemTouchHelper.Callback {
-    private ItemMoveListener onItemMove;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 
-    public CurrencyItemMover(ItemMoveListener onItemMove) {
-        this.onItemMove = onItemMove;
+public class CurrencyItemMover extends ItemTouchHelper.Callback {
+    private PublishSubject<MoveAction> moveActionFlow;
+
+    @SuppressLint("CheckResult")
+    public CurrencyItemMover() {
+        moveActionFlow = PublishSubject.create();
     }
 
     @Override
@@ -19,7 +25,7 @@ public class CurrencyItemMover extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        onItemMove.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        moveActionFlow.onNext(new MoveAction(viewHolder.getAdapterPosition(), target.getAdapterPosition()));
         return true;
     }
 
@@ -37,4 +43,9 @@ public class CurrencyItemMover extends ItemTouchHelper.Callback {
     public boolean isItemViewSwipeEnabled() {
         return false;
     }
+
+    public Flowable<MoveAction> getMoveActionFlow() {
+        return moveActionFlow.toFlowable(BackpressureStrategy.LATEST);
+    }
+
 }

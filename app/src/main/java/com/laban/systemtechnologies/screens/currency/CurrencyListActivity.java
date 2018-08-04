@@ -11,16 +11,22 @@ import com.laban.systemtechnologies.screens.BaseActivity;
 import com.laban.systemtechnologies.screens.Screen;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyListAdapter;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyView;
-import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewController;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewModel;
 import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.CurrencyItemMover;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 
 public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, CurrencyView> implements CurrencyView {
-    private RecyclerView recyclerView;
     private CurrencyListAdapter currencyListAdapter;
+    private CurrencyItemMover itemMover;
+    private PublishSubject<Object> updateActionFlow = PublishSubject.create();
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +37,29 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
     }
 
     private void initCurrencyList() {
-        recyclerView = findViewById(R.id.currency_course_list);
+        RecyclerView recyclerView = findViewById(R.id.currency_course_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         currencyListAdapter = new CurrencyListAdapter(new ArrayList<>());
         recyclerView.setAdapter(currencyListAdapter);
-        new ItemTouchHelper(new CurrencyItemMover(currencyListAdapter)).attachToRecyclerView(recyclerView);
+        itemMover = new CurrencyItemMover();
+        new ItemTouchHelper(itemMover).attachToRecyclerView(recyclerView);
+        itemMover.getMoveActionFlow().subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPositon));
+    }
 
+    @Override
+    protected void attachPresenter() {
+        super.attachPresenter();
+        disposable = getViewModel().getCurrencyFlow().observeOn(AndroidSchedulers.mainThread())
+                .subscribe(currencyListAdapter::replaceData);
+    }
+
+    @Override
+    protected void detachPresenter() {
+        super.detachPresenter();
+        disposable.dispose();
+        updateActionFlow.onComplete();
+        updateActionFlow = PublishSubject.create();
     }
 
     @Override
@@ -46,7 +68,7 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
     }
 
     @Override
-    public void setCurrencyList(List<CurrencyViewController> currencyList) {
-        currencyListAdapter.replaceData(currencyList);
+    public Flowable<Object> updateDataFlow() {
+        return updateActionFlow.toFlowable(BackpressureStrategy.DROP);
     }
 }
