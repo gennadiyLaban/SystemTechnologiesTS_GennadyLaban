@@ -24,7 +24,7 @@
         />
 
     <TextView
-        android:id="@+id/base_char_code"
+        android:id="@+id/scale_char_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/name"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="="
         app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintStart_toEndOf="@id/base_char_code"
+        app:layout_constraintStart_toEndOf="@id/scale_char_code"
         android:paddingStart="@dimen/equal_sign_horisontal_padding"
         android:paddingEnd="@dimen/equal_sign_horisontal_padding" />
 
