@@ -4,9 +4,9 @@ import android.util.Log;
 
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.Screen;
-import com.laban.systemtechnologies.screens.currency.CurrencyViewModel;
-import com.laban.systemtechnologies.screens.main.MainViewModel;
-import com.laban.systemtechnologies.screens.settings.SettingsViewModel;
+import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewModel;
+import com.laban.systemtechnologies.screens.main.presentation.MainViewModel;
+import com.laban.systemtechnologies.screens.settings.presentation.SettingsViewModel;
 
 import java.util.HashMap;
 import java.util.Map;

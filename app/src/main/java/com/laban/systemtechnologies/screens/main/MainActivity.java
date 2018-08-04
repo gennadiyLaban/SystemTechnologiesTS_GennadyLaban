@@ -8,6 +8,8 @@ import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
 import com.laban.systemtechnologies.screens.BaseActivity;
 import com.laban.systemtechnologies.screens.Screen;
 import com.laban.systemtechnologies.screens.currency.CurrencyListActivity;
+import com.laban.systemtechnologies.screens.main.presentation.MainView;
+import com.laban.systemtechnologies.screens.main.presentation.MainViewModel;
 import com.laban.systemtechnologies.screens.settings.SettingsActivity;
 
 public class MainActivity extends BaseActivity<MainViewModel, MainView> implements MainView {

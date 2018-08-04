@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
 import com.laban.systemtechnologies.screens.BaseActivity;
 import com.laban.systemtechnologies.screens.Screen;
+import com.laban.systemtechnologies.screens.settings.presentation.SettingsView;
+import com.laban.systemtechnologies.screens.settings.presentation.SettingsViewModel;
 
 public class SettingsActivity extends BaseActivity<SettingsViewModel, SettingsView> implements SettingsView {
 

@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.screens.main;
+package com.laban.systemtechnologies.screens.main.presentation;
 
 import com.laban.systemtechnologies.screens.DataRepository;
 

@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.screens.settings;
+package com.laban.systemtechnologies.screens.settings.presentation;
 
 import com.laban.systemtechnologies.screens.BaseView;
 

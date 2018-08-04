@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.screens.currency;
+package com.laban.systemtechnologies.screens.currency.presentation;
 
 import com.laban.systemtechnologies.screens.BaseViewModel;
 
