@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
 import com.laban.systemtechnologies.screens.BaseActivity;
@@ -12,6 +13,7 @@ import com.laban.systemtechnologies.screens.currency.presentation.CurrencyListAd
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyView;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewController;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewModel;
+import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.CurrencyItemMover;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         currencyListAdapter = new CurrencyListAdapter(new ArrayList<>());
         recyclerView.setAdapter(currencyListAdapter);
+        new ItemTouchHelper(new CurrencyItemMover(currencyListAdapter)).attachToRecyclerView(recyclerView);
+
     }
 
     @Override

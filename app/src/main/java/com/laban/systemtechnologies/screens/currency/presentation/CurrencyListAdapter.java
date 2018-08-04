@@ -8,15 +8,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
+import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.ItemMoveListener;
 
+import java.util.Collections;
 import java.util.List;
 
-public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapter.CurrencyHolder> {
+public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapter.CurrencyHolder> implements ItemMoveListener {
     private List<CurrencyViewController> controllers;
 
     public CurrencyListAdapter(List<CurrencyViewController> controllers) {
         this.controllers = controllers;
     }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(controllers, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(controllers, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
 
     public class CurrencyHolder extends RecyclerView.ViewHolder {
         public TextView name;

@@ -42,9 +42,9 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                         items.add(item);
 
                         item = new CurrencyItem();
-                        item.setName("Российский рубль");
-                        item.setRate(new BigDecimal("62.3"));
-                        item.setRateCharCode("RUB");
+                        item.setName("Не Российский рубль");
+                        item.setRate(new BigDecimal("100.3"));
+                        item.setRateCharCode("RUBss");
                         item.setScale(1);
                         item.setScaleCharCode("BYN");
                         items.add(item);
