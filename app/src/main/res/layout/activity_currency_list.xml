@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.laban.systemtechnologies.screens.currency.CurrencyListActivity"
-    android:paddingTop="10dp"
-    android:paddingStart="5dp"
-    android:paddingEnd="5dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="@dimen/cur_list_vertical_padding"
+    android:paddingBottom="@dimen/cur_list_vertical_padding"
+    android:paddingStart="@dimen/cur_list_horisontal_padding"
+    android:paddingEnd="@dimen/cur_list_horisontal_padding">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/currency_course_list"
