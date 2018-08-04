@@ -51,4 +51,17 @@ public class CurrencyListAdapter extends RecyclerView.Adapter<CurrencyListAdapte
     public int getItemCount() {
         return controllers.size();
     }
+
+    public void replaceData(List<CurrencyViewController> controllers) {
+        clear();
+        this.controllers.addAll(controllers);
+        this.notifyItemRangeInserted(0, this.controllers.size());
+    }
+
+    public void clear() {
+        int size = controllers.size();
+        controllers.clear();
+        notifyItemRangeRemoved(0, size);
+    }
+
 }
