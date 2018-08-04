@@ -1,6 +1,7 @@
 package com.laban.systemtechnologies.model.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class CurrencyItem {
     private String name;
@@ -50,5 +51,23 @@ public class CurrencyItem {
 
     public void setScaleCharCode(String scaleCharCode) {
         this.scaleCharCode = scaleCharCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrencyItem item = (CurrencyItem) o;
+        return scale == item.scale &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(rateCharCode, item.rateCharCode) &&
+                Objects.equals(rate, item.rate) &&
+                Objects.equals(scaleCharCode, item.scaleCharCode);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, rateCharCode, rate, scale, scaleCharCode);
     }
 }
