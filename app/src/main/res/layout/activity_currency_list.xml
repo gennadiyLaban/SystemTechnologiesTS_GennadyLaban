@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.laban.systemtechnologies.screens.currency.CurrencyListActivity">
+    tools:context="com.laban.systemtechnologies.screens.currency.CurrencyListActivity"
+    android:paddingTop="10dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="10dp">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/currency_course_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>
