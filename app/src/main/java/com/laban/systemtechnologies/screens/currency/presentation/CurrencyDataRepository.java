@@ -6,12 +6,11 @@ import com.laban.systemtechnologies.screens.DataRepository;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 public interface CurrencyDataRepository extends DataRepository {
 
     Flowable<List<CurrencyItem>> getCurrencyItemFlow();
 
-    Single<List<CurrencyItem>> updateData();
+    void updateData();
 
 }

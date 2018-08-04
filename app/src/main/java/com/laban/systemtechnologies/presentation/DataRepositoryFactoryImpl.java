@@ -13,8 +13,7 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 
 public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
 
@@ -29,18 +28,17 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                 break;
             case CURRENCY_LIST:
                 dataRepository = new CurrencyDataRepository() {
-                    private BehaviorSubject<List<CurrencyItem>> currencyFlow = BehaviorSubject.create();
+                    private PublishSubject<List<CurrencyItem>> currencyFlow = PublishSubject.create();
 
 
                     @Override
                     public Flowable<List<CurrencyItem>> getCurrencyItemFlow() {
-                        currencyFlow.onNext(initList());
                         return currencyFlow.toFlowable(BackpressureStrategy.BUFFER);
                     }
 
                     @Override
-                    public Single<List<CurrencyItem>> updateData() {
-                        return Single.just(initList());
+                    public void updateData() {
+                        currencyFlow.onNext(initList());
                     }
 
                     private List<CurrencyItem> initList() {

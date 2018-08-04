@@ -11,27 +11,28 @@ import java.util.List;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, CurrencyView> {
     private List<CurrencyItem> currencyItems;
-    private PublishSubject<List<CurrencyItem>> currencyFlow;
-    private Disposable disposable;
+    private BehaviorSubject<List<CurrencyItem>> currencyFlow;
+    private Disposable newDataDisposable;
+    private Disposable updateDisposable;
 
     public CurrencyViewModel(CurrencyDataRepository dataRepository) {
         super(dataRepository);
-        currencyFlow = PublishSubject.create();
+        currencyFlow = BehaviorSubject.create();
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void attachView(CurrencyView view) {
         super.attachView(view);
-        disposable = Flowable.merge(getDataRepository().getCurrencyItemFlow(), view.updateDataFlow().flatMapSingle(o -> getDataRepository().updateData()))
-                .doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext);
+        updateDisposable = getView().updateDataFlow().subscribe(o -> getDataRepository().updateData());
+        newDataDisposable = getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext);
+
         if (currencyItems == null) {
-            getDataRepository().updateData().doOnSuccess(this::updateCache).filter(items -> isAttach()).map(this::mapCurrencyItems)
-                    .subscribe(controllers -> currencyFlow.onNext(currencyItems));
+            getDataRepository().updateData();
         } else {
             currencyFlow.onNext(currencyItems);
         }
@@ -40,11 +41,14 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
     @Override
     public void detachView() {
         super.detachView();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
+        if (newDataDisposable != null && !newDataDisposable.isDisposed()) {
+            newDataDisposable.dispose();
+        }
+        if (updateDisposable != null && !updateDisposable.isDisposed()) {
+            updateDisposable.dispose();
         }
         currencyFlow.onComplete();
-        currencyFlow = PublishSubject.create();
+        currencyFlow = BehaviorSubject.create();
     }
 
     private List<CurrencyViewController> mapCurrencyItems(List<CurrencyItem> items) {
