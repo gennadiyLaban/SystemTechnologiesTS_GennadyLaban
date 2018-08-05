@@ -26,8 +26,8 @@ public class CurrencyPresenter implements CurrencyRepository {
     public Single<List<CurrencyItem>> getCurrencyCourse() {
         return httpRepository.getCurrencyCourse()
                 .doOnSuccess(currencyHolder::setCurrencyCourses)
-                .onErrorResumeNext(throwable -> Single.just(currencyHolder.getCurrencyCourses()))
-                .doOnError(throwable -> errorFlow.onNext((Error) throwable));
+                .doOnError(throwable -> errorFlow.onNext((Error) throwable))
+                .onErrorResumeNext(throwable -> Single.just(currencyHolder.getCurrencyCourses()));
     }
 
     public Flowable<Error> getErrorFlow() {

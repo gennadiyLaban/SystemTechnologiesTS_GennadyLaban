@@ -5,4 +5,6 @@
     <dimen name="cur_list_horisontal_padding">5dp</dimen>
     <dimen name="equal_sign_horisontal_padding">5dp</dimen>
     <dimen name="value_tv_width">55dp</dimen>
+    <dimen name="padding_error_dialog">20dp</dimen>
+    <dimen name="margin_confirm_btn">10dp</dimen>
 </resources>

@@ -26,8 +26,14 @@ public class ErrorRepository {
         errorFlow.onNext(error);
     }
 
+    public void nextError() {
+        if (!errors.isEmpty()) {
+            errorFlow.onNext(errors.getFirst());
+        }
+    }
+
     public Flowable<Error> getErrorFlow() {
-        return Flowable.concat(Flowable.fromIterable(errors), errorFlow.toFlowable(BackpressureStrategy.BUFFER));
+        return errorFlow.toFlowable(BackpressureStrategy.DROP);
     }
 
 }
