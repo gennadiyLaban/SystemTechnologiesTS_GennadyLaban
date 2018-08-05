@@ -8,9 +8,9 @@ import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class CurrencyHolder {
     private static final String SHARED_PREFERENCE_KEY = "shared_currency_prefs";
@@ -21,10 +21,11 @@ public class CurrencyHolder {
 
     public CurrencyHolder(SharedPreferences preferences) {
         this.preferences = preferences;
+        this.gson = new Gson();
     }
 
     public void setCurrencyCourses(List<CurrencyItem> courses) {
-        HashSet<String> jsonCourses = new HashSet<>();
+        ConcurrentSkipListSet<String> jsonCourses = new ConcurrentSkipListSet<>();
         for (CurrencyItem item : courses) {
             jsonCourses.add(gson.toJson(item));
         }

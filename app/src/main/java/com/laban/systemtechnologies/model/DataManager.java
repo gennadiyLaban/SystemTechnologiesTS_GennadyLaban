@@ -2,7 +2,6 @@ package com.laban.systemtechnologies.model;
 
 import android.annotation.SuppressLint;
 
-import com.laban.systemtechnologies.currency.http.CurrencyLoader;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.List;
@@ -15,8 +14,9 @@ public class DataManager {
     private PublishSubject<List<CurrencyItem>> currencyItemFlow;
     private CurrencyRepository currencyRepository;
 
-    public DataManager(CurrencyLoader repository) {
+    public DataManager(CurrencyRepository repository) {
         this.currencyRepository = repository;
+        currencyItemFlow = PublishSubject.create();
     }
 
     @SuppressLint("CheckResult")
@@ -25,7 +25,7 @@ public class DataManager {
     }
 
     public Flowable<List<CurrencyItem>> getCurrencyItemFlow() {
-        return currencyItemFlow.toFlowable(BackpressureStrategy.LATEST);
+        return currencyItemFlow.toFlowable(BackpressureStrategy.BUFFER);
     }
 
 }

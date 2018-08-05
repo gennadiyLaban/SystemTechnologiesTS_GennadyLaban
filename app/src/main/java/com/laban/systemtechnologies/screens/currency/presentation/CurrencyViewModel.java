@@ -31,7 +31,9 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
     public void attachView(CurrencyView view) {
         super.attachView(view);
         disposables.add(getView().updateDataFlow().subscribe(o -> getDataRepository().updateData()));
-        disposables.add(getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext));
+        disposables.add(getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache)
+                .filter(items -> isAttach())
+                .subscribe(currencyFlow::onNext));
         disposables.add(view.moveItemsFlow().subscribeOn(Schedulers.computation()).subscribe(this::moveItem));
 
         if (currencyItems == null) {
