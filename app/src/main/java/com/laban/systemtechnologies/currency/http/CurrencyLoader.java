@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.http;
+package com.laban.systemtechnologies.currency.http;
 
 import android.util.Log;
 
@@ -30,7 +30,7 @@ public class CurrencyLoader implements CurrencyRepository {
         currencyApi = currency.create(CurrencyApi.class);
     }
 
-    public Single<List<CurrencyItem>> loadCurrencyCourse() {
+    public Single<List<CurrencyItem>> getCurrencyCourse() {
         return currencyApi.getCurrencyList().map(result -> {
             Response<CurrencyResponse> response = result.response();
             if (result.isError() || !response.isSuccessful()) {
