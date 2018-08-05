@@ -12,6 +12,8 @@ public abstract class Error extends Exception {
 
     public abstract String getDialogMessage();
 
+    public abstract void setMessage(String message);
+
     public Single<Error> getConfirmCallback() {
         return confirmSubject;
     }

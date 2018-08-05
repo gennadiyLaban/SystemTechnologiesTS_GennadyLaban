@@ -7,6 +7,7 @@ public class NetworkConnectionException extends NetworkException {
         message = "Network connection fail";
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }

@@ -9,6 +9,7 @@ import com.laban.systemtechnologies.errorrs.ErrorRepositoryLocator;
 import com.laban.systemtechnologies.errorrs.exceptions.Error;
 import com.laban.systemtechnologies.presentation.ViewModelFactory;
 import com.laban.systemtechnologies.screens.error.ErrorDialogFragment;
+import com.laban.systemtechnologies.utils.ErrorMessageHelper;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
@@ -69,6 +70,7 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     }
 
     protected Single<Error> onError(Error error) {
+        error.setMessage(ErrorMessageHelper.getErrorMessage(error, this));
         ErrorDialogFragment fragment = ErrorDialogFragment.newInstance(error);
         Single<Error> confirmFlow = fragment.getConfirmErrorFlow();
         fragment.show(getSupportFragmentManager().beginTransaction(), "");

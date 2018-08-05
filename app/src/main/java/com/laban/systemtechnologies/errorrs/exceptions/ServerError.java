@@ -9,6 +9,7 @@ public class ServerError extends NetworkException {
         this.message = "Server Error code " + errorCode;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }

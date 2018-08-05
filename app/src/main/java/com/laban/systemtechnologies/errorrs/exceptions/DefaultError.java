@@ -11,6 +11,7 @@ public class DefaultError extends NetworkException {
         this.message = message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }

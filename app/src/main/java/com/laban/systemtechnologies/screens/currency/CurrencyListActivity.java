@@ -80,4 +80,5 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
     public Flowable<MoveAction> moveItemsFlow() {
         return itemMover.getMoveActionFlow();
     }
+
 }

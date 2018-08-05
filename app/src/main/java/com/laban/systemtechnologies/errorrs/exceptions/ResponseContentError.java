@@ -7,6 +7,7 @@ public class ResponseContentError extends NetworkException {
         message = "Invalid response";
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }
