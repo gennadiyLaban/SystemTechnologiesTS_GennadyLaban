@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.laban.systemtechnologies.application.CurrencyApplication"
         android:allowBackup="true"
