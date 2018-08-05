@@ -1,11 +1,13 @@
 package com.laban.systemtechnologies.currency.http;
 
-import android.util.Log;
-
 import com.laban.systemtechnologies.currency.CurrencyRepository;
+import com.laban.systemtechnologies.errorrs.exceptions.DefaultError;
+import com.laban.systemtechnologies.errorrs.exceptions.NetworkConnectionException;
 import com.laban.systemtechnologies.errorrs.exceptions.NetworkException;
+import com.laban.systemtechnologies.errorrs.exceptions.ServerError;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -13,6 +15,7 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.Result;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
@@ -33,17 +36,26 @@ public class CurrencyLoader implements CurrencyRepository {
 
     public Single<List<CurrencyItem>> getCurrencyCourse() {
         return currencyApi.getCurrencyList().map(result -> {
+            checkResult(result);
             Response<CurrencyResponse> response = result.response();
-            if (result.isError() || !response.isSuccessful()) {
-                if (result.isError()) {
-                    Log.e(getClass().getSimpleName(), result.error().toString());
-                } else {
-                    Log.d(getClass().getSimpleName(), response.message() + " " + response.code());
-                }
-                throw new NetworkException();
-            }
             return response.body().getCourses();
         }).flatMap(this::convertCurrencyCorses);
+    }
+
+    private void checkResult(Result result) throws NetworkException {
+        if (result.isError()) {
+            try {
+                throw result.error();
+            } catch (IOException e) {
+                throw new NetworkConnectionException();
+            } catch (Throwable throwable) {
+                throw new DefaultError(throwable.getMessage());
+            }
+        }
+        Response response = result.response();
+        if (!response.isSuccessful()) {
+            throw new ServerError(response.code());
+        }
     }
 
     private Single<List<CurrencyItem>> convertCurrencyCorses(List<CurrencyCourse> courses) {
