@@ -2,6 +2,7 @@ package com.laban.systemtechnologies.application;
 
 import android.app.Application;
 
+import com.laban.systemtechnologies.http.CurrencyLoader;
 import com.laban.systemtechnologies.presentation.DataRepositoryFactoryImpl;
 import com.laban.systemtechnologies.presentation.VMFactoryImpl;
 import com.laban.systemtechnologies.presentation.ViewModelFactory;
@@ -14,7 +15,7 @@ public class CurrencyApplication extends Application implements ViewModelFactory
     @Override
     public void onCreate() {
         super.onCreate();
-        viewModelFactory = new VMFactoryImpl(new DataRepositoryFactoryImpl());
+        viewModelFactory = new VMFactoryImpl(new DataRepositoryFactoryImpl(new CurrencyLoader()));
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.laban.systemtechnologies.presentation;
 
+import android.annotation.SuppressLint;
+
+import com.laban.systemtechnologies.http.CurrencyLoader;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.screens.DataRepository;
 import com.laban.systemtechnologies.screens.Screen;
@@ -16,7 +19,11 @@ import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
 
 public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
+    private CurrencyLoader currencyLoader;
 
+    public DataRepositoryFactoryImpl(CurrencyLoader currencyLoader) {
+        this.currencyLoader = currencyLoader;
+    }
 
     @Override
     public <T extends DataRepository> T createRepository(Screen screen) {
@@ -36,9 +43,17 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                         return currencyFlow.toFlowable(BackpressureStrategy.BUFFER);
                     }
 
+                    @SuppressLint("CheckResult")
                     @Override
                     public void updateData() {
-                        currencyFlow.onNext(initList());
+                        currencyLoader.loadCurrencyCourse()
+                                .subscribe((items, throwable) -> {
+                                    if (throwable == null) {
+                                        currencyFlow.onNext(items);
+                                    } else {
+                                        currencyFlow.onError(throwable);
+                                    }
+                                });
                     }
 
                     private List<CurrencyItem> initList() {
