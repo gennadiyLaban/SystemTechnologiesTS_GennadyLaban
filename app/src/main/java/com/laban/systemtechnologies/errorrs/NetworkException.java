@@ -1,4 +1,4 @@
 package com.laban.systemtechnologies.errorrs;
 
-public class NetworkException extends Exception {
+public abstract class NetworkException extends Error {
 }
