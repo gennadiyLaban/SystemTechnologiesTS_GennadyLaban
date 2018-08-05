@@ -2,7 +2,7 @@ package com.laban.systemtechnologies.application;
 
 import android.app.Application;
 
-import com.laban.systemtechnologies.http.CurrencyLoader;
+import com.laban.systemtechnologies.currency.http.CurrencyLoader;
 import com.laban.systemtechnologies.presentation.DataRepositoryFactoryImpl;
 import com.laban.systemtechnologies.presentation.VMFactoryImpl;
 import com.laban.systemtechnologies.presentation.ViewModelFactory;

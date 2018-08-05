@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.http;
+package com.laban.systemtechnologies.currency.http;
 
 import io.reactivex.Single;
 import retrofit2.adapter.rxjava2.Result;

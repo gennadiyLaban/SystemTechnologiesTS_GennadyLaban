@@ -2,7 +2,7 @@ package com.laban.systemtechnologies.presentation;
 
 import android.annotation.SuppressLint;
 
-import com.laban.systemtechnologies.http.CurrencyLoader;
+import com.laban.systemtechnologies.currency.http.CurrencyLoader;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.screens.DataRepository;
 import com.laban.systemtechnologies.screens.Screen;
@@ -46,7 +46,7 @@ public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
                     @SuppressLint("CheckResult")
                     @Override
                     public void updateData() {
-                        currencyLoader.loadCurrencyCourse()
+                        currencyLoader.getCurrencyCourse()
                                 .subscribe((items, throwable) -> {
                                     if (throwable == null) {
                                         currencyFlow.onNext(items);

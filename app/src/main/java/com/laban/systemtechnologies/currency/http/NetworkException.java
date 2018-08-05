@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.http;
+package com.laban.systemtechnologies.currency.http;
 
 public class NetworkException extends Exception {
 }

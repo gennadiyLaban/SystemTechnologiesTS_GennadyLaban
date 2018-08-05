@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.http;
+package com.laban.systemtechnologies.currency.http;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
