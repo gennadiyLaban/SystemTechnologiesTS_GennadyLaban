@@ -1,10 +1,13 @@
 package com.laban.systemtechnologies.application;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.laban.systemtechnologies.currency.CurrencyPresenter;
 import com.laban.systemtechnologies.currency.database.CurrencyHolder;
 import com.laban.systemtechnologies.currency.http.CurrencyLoader;
+import com.laban.systemtechnologies.errorrs.ErrorRepository;
+import com.laban.systemtechnologies.errorrs.ErrorRepositoryLocator;
 import com.laban.systemtechnologies.model.DataManager;
 import com.laban.systemtechnologies.presentation.DataRepositoryFactoryImpl;
 import com.laban.systemtechnologies.presentation.VMFactoryImpl;
@@ -12,13 +15,22 @@ import com.laban.systemtechnologies.presentation.ViewModelFactory;
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.Screen;
 
+import io.reactivex.schedulers.Schedulers;
+
 public class CurrencyApplication extends Application implements ViewModelFactory {
     private ViewModelFactory viewModelFactory;
 
+    @SuppressLint("CheckResult")
     @Override
     public void onCreate() {
         super.onCreate();
-        DataManager dataManager = new DataManager(new CurrencyPresenter(new CurrencyLoader(), CurrencyHolder.newInstance(this)));
+        ErrorRepository errorRepository = new ErrorRepository();
+        ErrorRepositoryLocator.setRepository(errorRepository);
+
+        CurrencyPresenter currencyPresenter = new CurrencyPresenter(new CurrencyLoader(), CurrencyHolder.newInstance(this));
+        currencyPresenter.getErrorFlow().subscribeOn(Schedulers.io()).subscribe(errorRepository::addError);
+
+        DataManager dataManager = new DataManager(currencyPresenter);
         viewModelFactory = new VMFactoryImpl(new DataRepositoryFactoryImpl(dataManager));
     }
 
