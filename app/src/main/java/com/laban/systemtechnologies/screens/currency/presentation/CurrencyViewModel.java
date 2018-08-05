@@ -13,6 +13,7 @@ import java.util.List;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, CurrencyView> {
@@ -31,7 +32,7 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
         super.attachView(view);
         disposables.add(getView().updateDataFlow().subscribe(o -> getDataRepository().updateData()));
         disposables.add(getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext));
-        disposables.add(view.moveItemsFlow().subscribe(this::moveItem));
+        disposables.add(view.moveItemsFlow().subscribeOn(Schedulers.computation()).subscribe(this::moveItem));
 
         if (currencyItems == null) {
             getDataRepository().updateData();
@@ -45,6 +46,7 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
         super.detachView();
         disposables.dispose();
         disposables.clear();
+        disposables = new CompositeDisposable();
         currencyFlow.onComplete();
         currencyFlow = BehaviorSubject.create();
     }

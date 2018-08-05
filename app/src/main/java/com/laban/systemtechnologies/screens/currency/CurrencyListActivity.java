@@ -1,5 +1,6 @@
 package com.laban.systemtechnologies.screens.currency;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
 
     }
 
+    @SuppressLint("CheckResult")
     private void initCurrencyList() {
         RecyclerView recyclerView = findViewById(R.id.currency_course_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -45,7 +47,8 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
         recyclerView.setAdapter(currencyListAdapter);
         itemMover = new CurrencyItemMover();
         new ItemTouchHelper(itemMover).attachToRecyclerView(recyclerView);
-        itemMover.getMoveActionFlow().subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPosition));
+        itemMover.getMoveActionFlow().observeOn(AndroidSchedulers.mainThread())
+                .subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPosition));
     }
 
     @Override
