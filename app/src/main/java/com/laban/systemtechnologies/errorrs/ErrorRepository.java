@@ -2,6 +2,8 @@ package com.laban.systemtechnologies.errorrs;
 
 import android.annotation.SuppressLint;
 
+import com.laban.systemtechnologies.errorrs.exceptions.Error;
+
 import java.util.LinkedList;
 
 import io.reactivex.BackpressureStrategy;

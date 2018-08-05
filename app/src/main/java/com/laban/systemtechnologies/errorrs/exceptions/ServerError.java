@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.errorrs;
+package com.laban.systemtechnologies.errorrs.exceptions;
 
 public class ServerError extends NetworkException {
     private String message;

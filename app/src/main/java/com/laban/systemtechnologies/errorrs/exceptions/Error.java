@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.errorrs;
+package com.laban.systemtechnologies.errorrs.exceptions;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.CompletableSubject;

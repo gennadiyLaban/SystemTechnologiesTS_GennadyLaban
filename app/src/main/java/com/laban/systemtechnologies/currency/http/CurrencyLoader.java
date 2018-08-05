@@ -3,7 +3,7 @@ package com.laban.systemtechnologies.currency.http;
 import android.util.Log;
 
 import com.laban.systemtechnologies.currency.CurrencyRepository;
-import com.laban.systemtechnologies.errorrs.NetworkException;
+import com.laban.systemtechnologies.errorrs.exceptions.NetworkException;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.List;

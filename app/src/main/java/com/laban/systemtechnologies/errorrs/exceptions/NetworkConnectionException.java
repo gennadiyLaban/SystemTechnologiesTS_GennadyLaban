@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.errorrs;
+package com.laban.systemtechnologies.errorrs.exceptions;
 
 public class NetworkConnectionException extends NetworkException {
     private String message;
