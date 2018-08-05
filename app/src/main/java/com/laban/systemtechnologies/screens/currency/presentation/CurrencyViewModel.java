@@ -4,20 +4,21 @@ import android.annotation.SuppressLint;
 
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.screens.BaseViewModel;
+import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.MoveAction;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, CurrencyView> {
     private List<CurrencyItem> currencyItems;
     private BehaviorSubject<List<CurrencyItem>> currencyFlow;
-    private Disposable newDataDisposable;
-    private Disposable updateDisposable;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     public CurrencyViewModel(CurrencyDataRepository dataRepository) {
         super(dataRepository);
@@ -28,8 +29,9 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
     @Override
     public void attachView(CurrencyView view) {
         super.attachView(view);
-        updateDisposable = getView().updateDataFlow().subscribe(o -> getDataRepository().updateData());
-        newDataDisposable = getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext);
+        disposables.add(getView().updateDataFlow().subscribe(o -> getDataRepository().updateData()));
+        disposables.add(getDataRepository().getCurrencyItemFlow().doOnNext(this::updateCache).filter(items -> isAttach()).subscribe(currencyFlow::onNext));
+        disposables.add(view.moveItemsFlow().subscribe(this::moveItem));
 
         if (currencyItems == null) {
             getDataRepository().updateData();
@@ -41,14 +43,22 @@ public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, Cur
     @Override
     public void detachView() {
         super.detachView();
-        if (newDataDisposable != null && !newDataDisposable.isDisposed()) {
-            newDataDisposable.dispose();
-        }
-        if (updateDisposable != null && !updateDisposable.isDisposed()) {
-            updateDisposable.dispose();
-        }
+        disposables.dispose();
+        disposables.clear();
         currencyFlow.onComplete();
         currencyFlow = BehaviorSubject.create();
+    }
+
+    private void moveItem(MoveAction moveAction) {
+        if (moveAction.fromPosition < moveAction.toPosition) {
+            for (int i = moveAction.fromPosition; i < moveAction.toPosition; i++) {
+                Collections.swap(currencyItems, i, i + 1);
+            }
+        } else {
+            for (int i = moveAction.fromPosition; i > moveAction.toPosition; i--) {
+                Collections.swap(currencyItems, i, i - 1);
+            }
+        }
     }
 
     private List<CurrencyViewController> mapCurrencyItems(List<CurrencyItem> items) {

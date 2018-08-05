@@ -13,6 +13,7 @@ import com.laban.systemtechnologies.screens.currency.presentation.CurrencyListAd
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyView;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyViewModel;
 import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.CurrencyItemMover;
+import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.MoveAction;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
         recyclerView.setAdapter(currencyListAdapter);
         itemMover = new CurrencyItemMover();
         new ItemTouchHelper(itemMover).attachToRecyclerView(recyclerView);
-        itemMover.getMoveActionFlow().subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPositon));
+        itemMover.getMoveActionFlow().subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPosition));
     }
 
     @Override
@@ -70,5 +71,10 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
     @Override
     public Flowable<Object> updateDataFlow() {
         return updateActionFlow.toFlowable(BackpressureStrategy.DROP);
+    }
+
+    @Override
+    public Flowable<MoveAction> moveItemsFlow() {
+        return itemMover.getMoveActionFlow();
     }
 }
