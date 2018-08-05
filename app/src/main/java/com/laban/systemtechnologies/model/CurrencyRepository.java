@@ -8,6 +8,6 @@ import io.reactivex.Single;
 
 public interface CurrencyRepository {
 
-    Single<List<CurrencyItem>> loadCurrencyCourse();
+    Single<List<CurrencyItem>> getCurrencyCourse();
 
 }
