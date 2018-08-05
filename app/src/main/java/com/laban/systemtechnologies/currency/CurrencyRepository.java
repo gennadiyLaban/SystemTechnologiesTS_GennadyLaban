@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.model;
+package com.laban.systemtechnologies.currency;
 
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 

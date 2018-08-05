@@ -1,7 +1,6 @@
 package com.laban.systemtechnologies.currency;
 
 import com.laban.systemtechnologies.currency.database.CurrencyHolder;
-import com.laban.systemtechnologies.model.CurrencyRepository;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.List;

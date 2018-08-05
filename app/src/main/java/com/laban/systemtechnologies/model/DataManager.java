@@ -2,6 +2,7 @@ package com.laban.systemtechnologies.model;
 
 import android.annotation.SuppressLint;
 
+import com.laban.systemtechnologies.currency.CurrencyRepository;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.List;
