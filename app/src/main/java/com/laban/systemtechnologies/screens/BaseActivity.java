@@ -29,6 +29,19 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        attachPresenter();
         ErrorRepository repository = ErrorRepositoryLocator.getRepository();
         errorDispossible = repository.getErrorFlow()
                 .flatMapSingle(error -> onError(error))
@@ -37,21 +50,10 @@ public abstract class BaseActivity<T extends BaseViewModel, V extends BaseView> 
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        errorDispossible.dispose();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        attachPresenter();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         detachPresenter();
+        errorDispossible.dispose();
     }
 
     @Override

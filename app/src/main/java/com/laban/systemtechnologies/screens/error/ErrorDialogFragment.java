@@ -18,11 +18,15 @@ import io.reactivex.subjects.CompletableSubject;
 public class ErrorDialogFragment extends AppCompatDialogFragment {
     private Error error;
     private CompletableSubject confirmFlow;
+    private boolean dismissed;
+
 
     @Override
-    public void onResume() {
-        super.onResume();
-        error.showError();
+    public void onStart() {
+        super.onStart();
+        if (dismissed) {
+            dismiss();
+        }
     }
 
     public ErrorDialogFragment() {
@@ -55,6 +59,9 @@ public class ErrorDialogFragment extends AppCompatDialogFragment {
             error.confirmError();
             confirmFlow.onComplete();
             dismiss();
+        });
+        error.getConfirmCallback().subscribe(e -> {
+            dismissed = true;
         });
         return root;
     }
