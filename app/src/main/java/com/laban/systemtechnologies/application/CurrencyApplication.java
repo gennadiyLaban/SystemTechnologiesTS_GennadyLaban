@@ -14,6 +14,9 @@ import com.laban.systemtechnologies.presentation.VMFactoryImpl;
 import com.laban.systemtechnologies.presentation.ViewModelFactory;
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.Screen;
+import com.laban.systemtechnologies.settings.WorkModeHolder;
+import com.laban.systemtechnologies.settings.WorkModeHolderLocator;
+import com.laban.systemtechnologies.settings.WorkModeManager;
 
 import io.reactivex.schedulers.Schedulers;
 
@@ -24,10 +27,17 @@ public class CurrencyApplication extends Application implements ViewModelFactory
     @Override
     public void onCreate() {
         super.onCreate();
+        WorkModeHolder workModeHolder = WorkModeManager.newInstance(this);
+        WorkModeHolderLocator.setWorkModeHolder(workModeHolder);
+
         ErrorRepository errorRepository = new ErrorRepository();
         ErrorRepositoryLocator.setRepository(errorRepository);
 
-        CurrencyPresenter currencyPresenter = new CurrencyPresenter(new CurrencyLoader(), CurrencyHolder.newInstance(this));
+        CurrencyLoader currencyLoader = new CurrencyLoader();
+        currencyLoader.setWorkMode(workModeHolder.getWorkMode());
+        workModeHolder.getWorkModeFlow().subscribe(currencyLoader::setWorkMode);
+
+        CurrencyPresenter currencyPresenter = new CurrencyPresenter(currencyLoader, CurrencyHolder.newInstance(this));
         currencyPresenter.getErrorFlow().subscribeOn(Schedulers.io()).subscribe(errorRepository::addError);
 
         DataManager dataManager = new DataManager(currencyPresenter);

@@ -7,6 +7,7 @@ import com.laban.systemtechnologies.errorrs.exceptions.NetworkException;
 import com.laban.systemtechnologies.errorrs.exceptions.ResponseContentError;
 import com.laban.systemtechnologies.errorrs.exceptions.ServerError;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
+import com.laban.systemtechnologies.settings.WorkMode;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CurrencyLoader implements CurrencyRepository {
     private static final String SCALE_CURRENCY = "BYN";
 
     private CurrencyApi currencyApi;
+    private WorkMode workMode = WorkMode.NORMAL_WORK;
 
     public CurrencyLoader() {
         Retrofit currency = new Retrofit.Builder()
@@ -36,12 +38,38 @@ public class CurrencyLoader implements CurrencyRepository {
         currencyApi = currency.create(CurrencyApi.class);
     }
 
+    public WorkMode getWorkMode() {
+        return workMode;
+    }
+
+    public void setWorkMode(WorkMode workMode) {
+        this.workMode = workMode;
+    }
+
     public Single<List<CurrencyItem>> getCurrencyCourse() {
-        return currencyApi.getCurrencyList().map(result -> {
+        return loadCourse().map(result -> {
             checkResult(result);
             Response<CurrencyResponse> response = result.response();
             return response.body().getCourses();
         }).flatMap(this::convertCurrencyCorses);
+    }
+
+    private Single<Result<CurrencyResponse>> loadCourse() {
+        Single<Result<CurrencyResponse>> listSingle;
+        switch (workMode) {
+            case NORMAL_WORK:
+                listSingle = currencyApi.getCurrencyList();
+                break;
+            case NOT_FOUND_EXCEPTION:
+                listSingle = currencyApi.getNotFoundException();
+                break;
+            case CONTENT_EXCEPTION:
+                listSingle = currencyApi.getContentException();
+                break;
+            default:
+                listSingle = currencyApi.getCurrencyList();
+        }
+        return listSingle;
     }
 
     private void checkResult(Result result) throws NetworkException {
