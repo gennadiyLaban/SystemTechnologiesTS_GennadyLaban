@@ -19,7 +19,7 @@ public class ErrorMessageHelper {
         } catch (ResponseContentError e) {
             message = context.getString(R.string.response_error_message);
         } catch (ServerError e) {
-            message = context.getString(R.string.server_error_message);
+            message = context.getString(R.string.server_error_message) + e.getErrorCode();
         } catch (Error e) {
             message = context.getString(R.string.default_error_message);
         }

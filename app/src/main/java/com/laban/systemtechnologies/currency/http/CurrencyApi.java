@@ -9,4 +9,10 @@ public interface CurrencyApi {
     @GET("Services/XmlExRates.aspx")
     Single<Result<CurrencyResponse>> getCurrencyList();
 
+    @GET("Services/NotFound")
+    Single<Result<CurrencyResponse>> getNotFoundException();
+
+    @GET("API/ExRates/Rates/USD?ParamMode=2")
+    Single<Result<CurrencyResponse>> getContentException();
+
 }

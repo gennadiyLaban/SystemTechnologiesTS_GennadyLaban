@@ -4,6 +4,7 @@ import com.laban.systemtechnologies.currency.CurrencyRepository;
 import com.laban.systemtechnologies.errorrs.exceptions.DefaultError;
 import com.laban.systemtechnologies.errorrs.exceptions.NetworkConnectionException;
 import com.laban.systemtechnologies.errorrs.exceptions.NetworkException;
+import com.laban.systemtechnologies.errorrs.exceptions.ResponseContentError;
 import com.laban.systemtechnologies.errorrs.exceptions.ServerError;
 import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
@@ -20,6 +21,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class CurrencyLoader implements CurrencyRepository {
+    private static final String PARSE_ERROR = "ParseError";
     private static final String BASE_URL_NB_RB = "http://www.nbrb.by/";
     private static final String SCALE_CURRENCY = "BYN";
 
@@ -49,7 +51,11 @@ public class CurrencyLoader implements CurrencyRepository {
             } catch (IOException e) {
                 throw new NetworkConnectionException();
             } catch (Throwable throwable) {
-                throw new DefaultError(throwable.getMessage());
+                if (throwable.getMessage().contains(PARSE_ERROR)) {
+                    throw new ResponseContentError();
+                } else {
+                    throw new DefaultError(throwable.getMessage());
+                }
             }
         }
         Response response = result.response();
