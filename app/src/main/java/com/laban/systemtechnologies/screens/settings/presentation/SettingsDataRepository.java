@@ -1,11 +1,13 @@
 package com.laban.systemtechnologies.screens.settings.presentation;
 
 import com.laban.systemtechnologies.screens.DataRepository;
+import com.laban.systemtechnologies.settings.WorkMode;
 
-/**
- * Copyright (c) 03.08.2018 Novacom.by
- * All rights reserved
- * Author: H.Laban
- */
+
 public interface SettingsDataRepository extends DataRepository {
+
+    WorkMode getWorkMode();
+
+    void setWorkMode(WorkMode workMode);
+
 }

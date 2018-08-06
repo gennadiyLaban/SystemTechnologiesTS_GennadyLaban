@@ -40,7 +40,7 @@ public class CurrencyApplication extends Application implements ViewModelFactory
         CurrencyPresenter currencyPresenter = new CurrencyPresenter(currencyLoader, CurrencyHolder.newInstance(this));
         currencyPresenter.getErrorFlow().subscribeOn(Schedulers.io()).subscribe(errorRepository::addError);
 
-        DataManager dataManager = new DataManager(currencyPresenter);
+        DataManager dataManager = new DataManager(currencyPresenter, workModeHolder);
         viewModelFactory = new VMFactoryImpl(new DataRepositoryFactoryImpl(dataManager));
     }
 

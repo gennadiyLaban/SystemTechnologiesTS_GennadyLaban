@@ -1,11 +1,14 @@
 package com.laban.systemtechnologies.screens.settings.presentation;
 
 import com.laban.systemtechnologies.screens.BaseView;
+import com.laban.systemtechnologies.settings.WorkMode;
 
-/**
- * Copyright (c) 03.08.2018 Novacom.by
- * All rights reserved
- * Author: H.Laban
- */
+import io.reactivex.Flowable;
+
 public interface SettingsView extends BaseView {
+
+    Flowable<WorkMode> getWorkModeFlow();
+
+    void setWorkMode(WorkMode workMode);
+
 }
