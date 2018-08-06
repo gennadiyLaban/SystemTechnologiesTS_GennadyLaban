@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.laban.systemtechnologies.com.systemtechnologiests_gennadylaban.R;
@@ -34,8 +35,18 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_list);
+        initToolbar();
         initCurrencyList();
 
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.icon_return));
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     @SuppressLint("CheckResult")
@@ -49,6 +60,7 @@ public class CurrencyListActivity extends BaseActivity<CurrencyViewModel, Curren
         new ItemTouchHelper(itemMover).attachToRecyclerView(recyclerView);
         itemMover.getMoveActionFlow().observeOn(AndroidSchedulers.mainThread())
                 .subscribe(moveAction -> currencyListAdapter.onItemMove(moveAction.fromPosition, moveAction.toPosition));
+        findViewById(R.id.update).setOnClickListener(v -> updateActionFlow.onNext(this));
     }
 
     @Override
