@@ -1,6 +1,6 @@
 package com.laban.systemtechnologies.screens.currency.presentation;
 
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public class CurrencyViewController {
     CurrencyItem item;

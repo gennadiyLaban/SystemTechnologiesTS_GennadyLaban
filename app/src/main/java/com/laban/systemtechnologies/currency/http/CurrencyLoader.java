@@ -6,7 +6,6 @@ import com.laban.systemtechnologies.errorrs.exceptions.NetworkConnectionExceptio
 import com.laban.systemtechnologies.errorrs.exceptions.NetworkException;
 import com.laban.systemtechnologies.errorrs.exceptions.ResponseContentError;
 import com.laban.systemtechnologies.errorrs.exceptions.ServerError;
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.settings.WorkMode;
 
 import java.io.IOException;
@@ -15,6 +14,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.Result;

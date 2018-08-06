@@ -1,4 +1,4 @@
-package com.laban.systemtechnologies.model.entity;
+package laban.ts.systemtechnologies.com.currency_model.model.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;

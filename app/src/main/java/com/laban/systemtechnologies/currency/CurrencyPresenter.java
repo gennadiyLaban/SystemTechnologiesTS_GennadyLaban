@@ -2,7 +2,6 @@ package com.laban.systemtechnologies.currency;
 
 import com.laban.systemtechnologies.currency.database.CurrencyHolder;
 import com.laban.systemtechnologies.errorrs.exceptions.Error;
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
 
 import java.util.List;
 
@@ -10,6 +9,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public class CurrencyPresenter implements CurrencyRepository {
     private CurrencyRepository httpRepository;

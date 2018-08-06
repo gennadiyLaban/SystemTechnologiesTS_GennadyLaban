@@ -1,10 +1,9 @@
 package com.laban.systemtechnologies.currency;
 
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
-
 import java.util.List;
 
 import io.reactivex.Single;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public interface CurrencyRepository {
 

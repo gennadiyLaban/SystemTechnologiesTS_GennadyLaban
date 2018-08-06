@@ -2,8 +2,7 @@ package com.laban.systemtechnologies.presentation;
 
 import android.annotation.SuppressLint;
 
-import com.laban.systemtechnologies.model.DataManager;
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
+import com.laban.systemtechnologies.data.DataManager;
 import com.laban.systemtechnologies.screens.DataRepository;
 import com.laban.systemtechnologies.screens.Screen;
 import com.laban.systemtechnologies.screens.currency.presentation.CurrencyDataRepository;
@@ -14,6 +13,7 @@ import com.laban.systemtechnologies.settings.WorkMode;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public class DataRepositoryFactoryImpl implements DataRepositoryFactory {
     private DataManager dataManager;

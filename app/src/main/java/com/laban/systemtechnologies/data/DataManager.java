@@ -1,9 +1,8 @@
-package com.laban.systemtechnologies.model;
+package com.laban.systemtechnologies.data;
 
 import android.annotation.SuppressLint;
 
 import com.laban.systemtechnologies.currency.CurrencyRepository;
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.settings.WorkMode;
 import com.laban.systemtechnologies.settings.WorkModeHolder;
 
@@ -12,6 +11,7 @@ import java.util.List;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public class DataManager implements WorkModeHolder {
     private PublishSubject<List<CurrencyItem>> currencyItemFlow;

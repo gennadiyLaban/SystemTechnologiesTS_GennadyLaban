@@ -2,7 +2,6 @@ package com.laban.systemtechnologies.screens.currency.presentation;
 
 import android.annotation.SuppressLint;
 
-import com.laban.systemtechnologies.model.entity.CurrencyItem;
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.currency.presentation.recyclerview.MoveAction;
 
@@ -15,6 +14,7 @@ import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
+import laban.ts.systemtechnologies.com.currency_model.model.entity.CurrencyItem;
 
 public class CurrencyViewModel extends BaseViewModel<CurrencyDataRepository, CurrencyView> {
     private List<CurrencyItem> currencyItems;
