@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="currency_item_common_padding">5dp</dimen>
+    <dimen name="currency_item_common_margin">3dp</dimen>
     <dimen name="cur_list_vertical_padding">10dp</dimen>
     <dimen name="cur_list_horisontal_padding">5dp</dimen>
     <dimen name="equal_sign_horisontal_padding">5dp</dimen>
     <dimen name="value_tv_width">55dp</dimen>
     <dimen name="padding_error_dialog">20dp</dimen>
     <dimen name="margin_confirm_btn">10dp</dimen>
+    <dimen name="currency_item_common_padding">10dp</dimen>
 </resources>
