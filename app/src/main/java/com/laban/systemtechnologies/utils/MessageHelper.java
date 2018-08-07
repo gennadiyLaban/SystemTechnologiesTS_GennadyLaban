@@ -8,7 +8,20 @@ import com.laban.systemtechnologies.errorrs.exceptions.NetworkConnectionExceptio
 import com.laban.systemtechnologies.errorrs.exceptions.ResponseContentError;
 import com.laban.systemtechnologies.errorrs.exceptions.ServerError;
 
-public class ErrorMessageHelper {
+public class MessageHelper {
+    private Context context;
+
+    public MessageHelper(Context context) {
+        this.context = context;
+    }
+
+    public String getErrorMessage(Error error) {
+        return getErrorMessage(error, context);
+    }
+
+    public String getSuccessMessage() {
+        return getSuccessMessage(context);
+    }
 
     public static String getErrorMessage(Error error, Context context) {
         String message;
@@ -24,6 +37,10 @@ public class ErrorMessageHelper {
             message = context.getString(R.string.default_error_message);
         }
         return message;
+    }
+
+    public static String getSuccessMessage(Context context) {
+        return context.getString(R.string.success_message);
     }
 
 

@@ -11,6 +11,7 @@ import com.laban.systemtechnologies.screens.currency.CurrencyListActivity;
 import com.laban.systemtechnologies.screens.main.presentation.MainView;
 import com.laban.systemtechnologies.screens.main.presentation.MainViewModel;
 import com.laban.systemtechnologies.screens.settings.SettingsActivity;
+import com.laban.systemtechnologies.service.CurrencyApiService;
 
 public class MainActivity extends BaseActivity<MainViewModel, MainView> implements MainView {
     private View settingsBtn;
@@ -44,5 +45,6 @@ public class MainActivity extends BaseActivity<MainViewModel, MainView> implemen
         super.attachPresenter();
         settingsBtn.setOnClickListener(v -> getViewModel().onPressSettingsBtn());
         currencyBtn.setOnClickListener(v -> getViewModel().onPressCurrencyBtn());
+        findViewById(R.id.service).setOnClickListener(v -> startService(new Intent(this, CurrencyApiService.class)));
     }
 }
