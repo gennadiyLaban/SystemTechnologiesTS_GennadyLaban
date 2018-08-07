@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="success_message">Операция завершена успешно!</string>
+
     <string name="default_error_message">Неизвестная ошибка! Обратитесь в службу технической поддержки.</string>
     <string name="network_connection_error_message">Отсутствует соединение с интернетом! Включите передачу данных и повторите попытку.</string>
     <string name="response_error_message">Сервер не смог корректно обработать запрос! Повторите попытку позже.</string>
