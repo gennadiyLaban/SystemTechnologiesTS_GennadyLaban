@@ -14,14 +14,19 @@ import com.laban.systemtechnologies.presentation.VMFactoryImpl;
 import com.laban.systemtechnologies.presentation.ViewModelFactory;
 import com.laban.systemtechnologies.screens.BaseViewModel;
 import com.laban.systemtechnologies.screens.Screen;
+import com.laban.systemtechnologies.service.currency.ServiceCurrencyAdapter;
+import com.laban.systemtechnologies.service.currency.ServiceCurrencyAipiHolder;
 import com.laban.systemtechnologies.settings.WorkModeHolder;
 import com.laban.systemtechnologies.settings.WorkModeHolderLocator;
 import com.laban.systemtechnologies.settings.WorkModeManager;
+import com.laban.systemtechnologies.utils.MessageHelper;
 
 import io.reactivex.schedulers.Schedulers;
+import laban.ts.systemtechnologies.com.shared_currency_api.CurrencyAidlApi;
 
-public class CurrencyApplication extends Application implements ViewModelFactory {
+public class CurrencyApplication extends Application implements ViewModelFactory, ServiceCurrencyAipiHolder {
     private ViewModelFactory viewModelFactory;
+    private CurrencyAidlApi.Stub currencyAidlApi;
 
     @SuppressLint("CheckResult")
     @Override
@@ -37,7 +42,11 @@ public class CurrencyApplication extends Application implements ViewModelFactory
         currencyLoader.setWorkMode(workModeHolder.getWorkMode());
         workModeHolder.getWorkModeFlow().subscribe(currencyLoader::setWorkMode);
 
-        CurrencyPresenter currencyPresenter = new CurrencyPresenter(currencyLoader, CurrencyHolder.newInstance(this));
+
+        CurrencyHolder currencyHolder = CurrencyHolder.newInstance(this);
+        currencyAidlApi = new ServiceCurrencyAdapter(new MessageHelper(this), currencyLoader, currencyHolder);
+
+        CurrencyPresenter currencyPresenter = new CurrencyPresenter(currencyLoader, currencyHolder);
         currencyPresenter.getErrorFlow().subscribeOn(Schedulers.io()).subscribe(errorRepository::addError);
 
         DataManager dataManager = new DataManager(currencyPresenter, workModeHolder);
@@ -54,4 +63,8 @@ public class CurrencyApplication extends Application implements ViewModelFactory
         viewModelFactory.onDestroyScreen(screen, rotation);
     }
 
+    @Override
+    public CurrencyAidlApi.Stub getCurrencyAidlApi() {
+        return currencyAidlApi;
+    }
 }

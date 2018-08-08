@@ -1,1 +1,1 @@
-include ':app', ':shared-currency-api', ':currency-model'
+include ':app', ':shared-currency-api', ':currency-model', ':testconnectapp'
